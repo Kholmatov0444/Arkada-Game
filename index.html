@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Монетопад: Магазин персонажей и Возрождение!</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Yandex Games SDK: обязателен для публикации на платформе Яндекс Игры -->
+    <script src="https://yandex.ru/games/sdk/v2"></script>
+</head>
+<body>
+
+    <!-- Экран загрузки: скрывается, когда игра готова, и сигнализирует SDK через LoadingAPI.ready() -->
+    <div id="loadingScreen">
+        <div class="loading-logo">🪙</div>
+        <div class="loading-title">Монетопад</div>
+        <div class="loading-bar-track"><div id="loadingBar" class="loading-bar-fill"></div></div>
+        <div class="loading-hint">Загрузка...</div>
+    </div>
+
+    <!-- Верхние кнопки -->
+    <div id="topButtons">
+        <button id="shopBtn">🏪 Магазин</button>
+        <button id="settingsBtn">⚙️ Настройки</button>
+    </div>
+
+    <!-- Модальное окно настроек -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Настройки</h2>
+            
+            <div class="setting-group">
+                <label id="langLabel">Язык / Language:</label>
+                <select id="langSelect">
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label id="soundLabel">Звуки / Музыка:</label>
+                <button id="toggleSoundBtn" class="toggle-btn">🔊 Включено</button>
+            </div>
+
+            <div class="setting-group">
+                <label id="diffLabel">Уровень сложности:</label>
+                <select id="diffSelect">
+                    <option value="easy">Легкий</option>
+                    <option value="normal" selected>Нормальный</option>
+                    <option value="hard">Сложный</option>
+                    <option value="impossible">Невозможно</option>
+                </select>
+            </div>
+
+            <button id="closeSettingsBtn" class="action-btn">Начать игру</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно Магазина персонажей -->
+    <div id="shopModal" class="modal" style="display: none;">
+        <div class="modal-content shop-content">
+            <h2 id="shopTitle">Магазин персонажей</h2>
+            <div id="coinsDisplay" class="coins-badge">💰 Монет: <span id="playerCoins">0</span></div>
+            
+            <div id="charactersList" class="characters-grid">
+                <!-- Персонажи генерируются динамически -->
+            </div>
+
+            <button id="closeShopBtn" class="action-btn">Назад в игру</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно Ежедневного бонуса -->
+    <div id="dailyModal" class="modal" style="display: none;">
+        <div class="modal-content daily-content">
+            <h2 id="dailyTitle">🎁 Ежедневный бонус!</h2>
+            <p id="dailyText">Вы зашли в игру сегодня! Получите свою награду:</p>
+            <div class="daily-reward-box">💰 +50 монет</div>
+            <button id="claimDailyBtn" class="action-btn">Забрать бонус!</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно Возрождения (Subway Surfers стиль) -->
+    <div id="reviveModal" class="modal" style="display: none;">
+        <div class="modal-content revive-content">
+            <h2 id="reviveTitle">💥 Ой, взрыв!</h2>
+            <p id="reviveText">Хотите продолжить игру и сохранить свой счет?</p>
+            <div id="reviveCostDisplay" class="revive-cost">Стоимость: 💰 20 монет</div>
+            <button id="reviveBtn" class="action-btn revive-action-btn">Продолжить игру!</button>
+            <button id="giveUpBtn" class="action-btn cancel-btn">Начать заново</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно Проигрыша -->
+    <div id="gameOverModal" class="modal" style="display: none;">
+        <div class="modal-content gameover-content">
+            <div id="newRecordBadge" class="new-record-badge" style="display:none;">🏆 Новый рекорд!</div>
+            <h2 id="gameOverTitle">💥 Игра окончена!</h2>
+            <div class="gameover-stats">
+                <div class="gameover-row"><span>Счёт:</span><b id="finalScore">0</b></div>
+                <div class="gameover-row"><span>Рекорд:</span><b id="finalRecord">0</b></div>
+                <div class="gameover-row gold"><span>Монет получено:</span><b id="finalCoins">+0</b></div>
+            </div>
+            <button id="playAgainBtn" class="action-btn">🔄 Играть снова</button>
+            <button id="gameOverShopBtn" class="action-btn cancel-btn">🏪 Магазин</button>
+        </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
